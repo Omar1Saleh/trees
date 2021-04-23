@@ -85,5 +85,21 @@ def levelorder_traversal(ll):
             if(root.value.right_child is not None):
                 customqueue.enqueue(root.value.right_child)
 
+def seachTree(ll, item):
+    if not ll:
+        return
+    else:
+        customqueue = Queue()
+        customqueue.enqueue(ll)
+        while not (customqueue.is_empty()):
+            root = customqueue.dequeue()
+            if root.value.data == item:
+                return 'Success!'
+            if(root.value.left_child is not None):
+                customqueue.enqueue(root.value.left_child)
+            if(root.value.right_child is not None):
+                customqueue.enqueue(root.value.right_child)
+
 levelorder_traversal(newBT)
+print(seachTree(newBT,'Hot'))
 
