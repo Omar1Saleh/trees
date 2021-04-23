@@ -99,7 +99,7 @@ def seachTree(ll, item):
                 customqueue.enqueue(root.value.left_child)
             if(root.value.right_child is not None):
                 customqueue.enqueue(root.value.right_child)
-
+        return 'Not Found!'
 levelorder_traversal(newBT)
-print(seachTree(newBT,'Hot'))
+print(seachTree(newBT,'Ht'))
 
