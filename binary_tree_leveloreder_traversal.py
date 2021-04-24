@@ -1,4 +1,3 @@
-
 class Node:
     def __init__(self, value=None):
         self.value = value
@@ -6,6 +5,7 @@ class Node:
 
     def __str__(self):
         return str(self.value)
+
 
 class LinkedList:
 
@@ -18,6 +18,7 @@ class LinkedList:
         while current_node:
             yield current_node.value
             current_node = current_node.next
+
 
 class Queue:
 
@@ -55,6 +56,7 @@ class Queue:
                 self.linked_list.head = self.linked_list.head.next
             return temp_node
 
+
 class TreeNode:
 
     def __init__(self, data):
@@ -66,12 +68,10 @@ class TreeNode:
 newBT = TreeNode('Drinks')
 
 lc = TreeNode('Hot')
-rc = TreeNode('Cold')
 newBT.left_child = lc
-newBT.right_child = rc
+
 
 def levelorder_traversal(ll):
-
     if not ll:
         return
     else:
@@ -80,10 +80,11 @@ def levelorder_traversal(ll):
         while not (customqueue.is_empty()):
             root = customqueue.dequeue()
             print(root.value.data)
-            if(root.value.left_child is not None):
+            if (root.value.left_child is not None):
                 customqueue.enqueue(root.value.left_child)
-            if(root.value.right_child is not None):
+            if (root.value.right_child is not None):
                 customqueue.enqueue(root.value.right_child)
+
 
 def seachTree(ll, item):
     if not ll:
@@ -95,11 +96,37 @@ def seachTree(ll, item):
             root = customqueue.dequeue()
             if root.value.data == item:
                 return 'Success!'
-            if(root.value.left_child is not None):
+            if (root.value.left_child is not None):
                 customqueue.enqueue(root.value.left_child)
-            if(root.value.right_child is not None):
+            if (root.value.right_child is not None):
                 customqueue.enqueue(root.value.right_child)
         return 'Not Found!'
-levelorder_traversal(newBT)
-print(seachTree(newBT,'Ht'))
 
+
+def insert_node(tree, item):
+    if not tree:
+        newBT = TreeNode(item)
+    else:
+        customqueue = Queue()
+        customqueue.enqueue(tree)
+        while not (customqueue.is_empty()):
+            root = customqueue.dequeue()
+            if root.value.left_child is not None:
+                customqueue.enqueue(root.value.left_child)
+            elif root.value.left_child is None:
+                lc = TreeNode(item)
+                root.value.left_child = lc
+            elif root.value.right_child is not None:
+                customqueue.enqueue(root.value.right_child)
+            elif root.value.right_child is None:
+                rc = TreeNode(item)
+                root.value.right_child = rc
+
+
+levelorder_traversal(newBT)
+insert_node(newBT, 'Cold')
+insert_node(newBT, 'Tea')
+insert_node(newBT, 'Coffee')
+insert_node(newBT, 'Soda')
+insert_node(newBT, 'Fanta')
+levelorder_traversal(newBT)
