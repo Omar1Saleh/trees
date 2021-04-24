@@ -65,12 +65,6 @@ class TreeNode:
         self.right_child = None
 
 
-newBT = TreeNode('Drinks')
-
-lc = TreeNode('Hot')
-newBT.left_child = lc
-
-
 def levelorder_traversal(ll):
     if not ll:
         return
@@ -123,10 +117,86 @@ def insert_node(tree, item):
                 root.value.right_child = rc
 
 
-levelorder_traversal(newBT)
+def levelorder_deepest_node(ll):
+    if not ll:
+        return
+    else:
+        customqueue = Queue()
+        customqueue.enqueue(ll)
+        while not (customqueue.is_empty()):
+            root = customqueue.dequeue()
+            if (root.value.left_child is not None):
+                customqueue.enqueue(root.value.left_child)
+            if (root.value.right_child is not None):
+                customqueue.enqueue(root.value.right_child)
+        deepest_node = root.value
+        return deepest_node
+
+
+def delete_depest(tree, deeppest_node):
+    if not tree:
+        return
+    else:
+        custom_queue = Queue()
+        custom_queue.enqueue(tree)
+        while not (custom_queue.is_empty()):
+            root = custom_queue.dequeue()
+            if root.value is deeppest_node:
+                root.value = None
+                return
+            if root.value.right_child:
+                if root.value.right_child == deeppest_node:
+                    root.value.right_child = None
+                    return
+                else:
+                    custom_queue.enqueue(root.value.right_chil)
+            if root.value.left_child:
+                if root.value.left_child == deeppest_node:
+                    root.value.left_child = None
+                    return
+                else:
+                    custom_queue.enqueue(root.value.left_child)
+
+
+def delete_node(ll, item):
+    if not ll:
+        return
+    else:
+        customqueue = Queue()
+        customqueue.enqueue(ll)
+        while not (customqueue.is_empty()):
+            root = customqueue.dequeue()
+            if root.value.data == item:
+                deepest = levelorder_deepest_node(ll)
+                root.value.data = deepest.data
+                delete_depest(ll, deepest)
+            if root.value.left_child is not None:
+                customqueue.enqueue(root.value.left_child)
+            if root.value.right_child is not None:
+                customqueue.enqueue(root.value.right_child)
+        return 'Not Found!'
+
+
+def delete_tree(ll):
+    if not ll:
+        return 'tree does not exist!'
+    else:
+        ll.data = None
+        ll.left_child = None
+        ll.right_child = None
+        return 'tree deleted!'
+
+
+newBT = TreeNode('Drinks')
+
+lc = TreeNode('Hot')
+newBT.left_child = lc
 insert_node(newBT, 'Cold')
 insert_node(newBT, 'Tea')
 insert_node(newBT, 'Coffee')
 insert_node(newBT, 'Soda')
 insert_node(newBT, 'Fanta')
+delete_node(newBT, 'Tea')
+levelorder_traversal(newBT)
+delete_tree(newBT)
 levelorder_traversal(newBT)
