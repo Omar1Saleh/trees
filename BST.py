@@ -62,32 +62,36 @@ def seach_BST(tree, value):
     except:
         return 'Value not found!'
 
-def mini(tree):
+
+def minValueNode(tree):
     current = tree
-    while(current.left_child is not None):
+    while (current.left_child is not None):
         current = current.left_child
     return current
 
-def delete_node(tree, value):
-    if tree is None:
-        return tree
-    if value < tree.data :
-        tree.left_chile = delete_node(tree.left_child, value)
-    elif value > tree.data:
-        tree.right_chile = delete_node(tree.right_child, value)
+
+def delete_node(root_node, node_value):
+    if root_node is None:
+        return root_node
+    if node_value < root_node.data:
+        root_node.left_child = delete_node(root_node.left_child, node_value)
+    elif node_value > root_node.data:
+        root_node.right_child = delete_node(root_node.right_child, node_value)
     else:
-        if tree.left_child is None :
-            temp = tree.right_child
-            tree = None
+        if root_node.left_child is None:
+            temp = root_node.right_child
+            root_node = None
             return temp
-        if tree.right_child is None :
-            temp = tree.left_child
-            tree = None
+
+        if root_node.right_child is None:
+            temp = root_node.left_child
+            root_node = None
             return temp
-        temp = mini(tree.right_child)
-        tree.data = temp.data
-        tree.right_child = delete_node(tree.right_child, temp.data)
-    return tree
+
+        temp = minValueNode(root_node.right_child)
+        root_node.data = temp.data
+        root_node.right_child = delete_node(root_node.right_child, temp.data)
+    return root_node
 
 
 def delet_tree(tree):
@@ -96,19 +100,17 @@ def delet_tree(tree):
     tree.right_child = None
     return 'tree deleted!'
 
-new_Bst = bst()
-print(insert_node(new_Bst, 70))
-print(insert_node(new_Bst, 40))
-print(insert_node(new_Bst, 90))
-print(insert_node(new_Bst, 80))
-print(insert_node(new_Bst, 30))
-print(insert_node(new_Bst, 60))
+
+new_Bst = bst(None)
 print(insert_node(new_Bst, 10))
+print(insert_node(new_Bst, 20))
+print(insert_node(new_Bst, 30))
+print(insert_node(new_Bst, 40))
+print(insert_node(new_Bst, 80))
+print(insert_node(new_Bst, 60))
+print(insert_node(new_Bst, 90))
+print(delete_node(new_Bst, 90))
+# inorder_traversal(new_Bst)
 
-
-delete_node(new_Bst, 90)
+# delet_tree(new_Bst)
 inorder_traversal(new_Bst)
-
-delet_tree(new_Bst)
-inorder_traversal(new_Bst)
-# print(seach_BST(new_Bst, 9))
